@@ -65,4 +65,31 @@ output "nat_gateway_public_ip" {
   description = "Public IP address of the NAT Gateway"
   value       = aws_eip.nat.public_ip
 }
+output "alb_dns_name" {
+  description = "Public DNS name of the Application Load Balancer"
+  value       = aws_lb.app.dns_name
+}
 
+output "alb_arn" {
+  description = "ARN of the Application Load Balancer"
+  value       = aws_lb.app.arn
+}
+
+output "app_target_group_arn" {
+  description = "ARN of the application Target Group"
+  value       = aws_lb_target_group.app.arn
+}
+
+output "app_instance_ids" {
+  description = "IDs of the application EC2 instances"
+  value = {
+    for name, instance in aws_instance.app : name => instance.id
+  }
+}
+
+output "app_private_ips" {
+  description = "Private IP addresses of the application EC2 instances"
+  value = {
+    for name, instance in aws_instance.app : name => instance.private_ip
+  }
+}
