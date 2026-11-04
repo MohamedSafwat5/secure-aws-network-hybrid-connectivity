@@ -11,7 +11,9 @@ resource "aws_instance" "app" {
     app_a = aws_subnet.app_a.id
     app_b = aws_subnet.app_b.id
   }
-
+  depends_on = [
+    aws_iam_role_policy_attachment.ec2_ssm
+  ]
   ami                         = data.aws_ssm_parameter.al2023_ami.value
   instance_type               = "t3.micro"
   subnet_id                   = each.value
